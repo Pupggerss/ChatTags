@@ -1,0 +1,18 @@
+---
+database:
+  # only sqlite supported!
+  type: sqlite
+
+  sqlite:
+    file: data.sqlite
+  # Edit these settings only if you choose "mysql".
+  mysql:
+    host: ""
+    # Avoid using the "root" user for security reasons.
+    username:
+    password: ""
+    schema:
+  # The maximum number of simultaneous SQL queries
+  # Recommended: 1 for sqlite, 2 for MySQL. You may want to further increase this value if your MySQL connection is very slow.
+  worker-limit: 5
+...

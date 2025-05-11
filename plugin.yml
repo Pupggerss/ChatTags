@@ -1,0 +1,11 @@
+name: ChatTags
+main: pup\chattags\Main
+description: Custom Chat Prefixes
+api: 5.0.0
+version: 1.0.0
+author: pup
+
+permissions:
+  chattags.command:
+    default: op
+    description: Add, Remove or display player ChatTags"

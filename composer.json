@@ -1,0 +1,15 @@
+{
+  "name": "dre/skyblockcore",
+  "require": {
+    "sof3/libasynql": "^4.2.2",
+    "pocketmine/pocketmine-mp": "^5.0.0",
+    "dktapps/pmforms": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "classmap": [
+      "src"
+    ]
+  }
+}
