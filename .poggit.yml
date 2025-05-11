@@ -2,7 +2,7 @@
 build-by-default: true
 branches:
 - main
-projects: [
+projects:
  ChatTags:
    path: ""
    libs:
@@ -10,5 +10,4 @@ projects: [
          version: ^2.1.0
      - src: poggit/libasynql/libasynql
          version: ^3.0
-]
 ...
