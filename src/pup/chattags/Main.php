@@ -14,7 +14,6 @@ class Main extends PluginBase
     private static self $instance;
     private DataManager $database;
     private SessionManager $sessionManager;
-    private TagManager $tagManager;
 
     public function onLoad(): void{
         self::$instance = $this;
@@ -25,7 +24,7 @@ class Main extends PluginBase
         $this->database->loadDatabase();
 
         $this->sessionManager = new SessionManager();
-        $this->tagManager = new TagManager();
+        new TagManager();
 
         $this->getServer()->getCommandMap()->register("ChatTags", new tagsCommand());
 

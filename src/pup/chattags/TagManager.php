@@ -10,7 +10,6 @@ final class TagManager
 
     public function __construct()
     {
-        //tags.json is NOT intended to be used as a database but just to add customization to tags
         Main::getInstance()->saveResource('tags.json');
         self::$tags = self::loadTags();
     }
