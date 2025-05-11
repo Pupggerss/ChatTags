@@ -5,4 +5,9 @@ branches:
 projects:
   ChatTags:
     path: ""
+    libs:
+      - src: dktapps-pm-pl/pmforms/pmforms
+        version: ^2.1.0
+      - src: poggit/libasynql/libasynql
+        version: ^3.0
 ...
