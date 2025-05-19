@@ -13,6 +13,8 @@ use pup\chattags\utils\PlaceholderApi;
 class tagsCommand extends Command {
     use PlaceholderApi;
 
+   //TODO: MANAGE PERMISSIONS
+
     public function __construct() {
         parent::__construct("tags", "Manage ChatTags", "/tag <add|remove|menu|give> [args]", ["/chattags"]);
         $this->setPermission("chattags.command");
