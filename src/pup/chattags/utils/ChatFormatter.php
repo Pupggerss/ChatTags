@@ -14,6 +14,8 @@ class ChatFormatter implements \pocketmine\player\chat\ChatFormatter
 {
     use PlaceholderApi;
 
+//To be edited, not force a specific format.
+
     public function format(string $username, string $message): Translatable|string
     {
         $player = Main::getInstance()->getServer()->getPlayerExact($username);
