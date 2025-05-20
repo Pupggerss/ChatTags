@@ -1,8 +1,5 @@
 <?php
-
-
 namespace pup\chattags\session;
-
 
 use pocketmine\player\Player;
 use pup\chattags\Main;
@@ -14,17 +11,21 @@ final class SessionManager
     public function createSession(Player $player): void
     {
         $xuid = $player->getXuid();
-        $db = Main::getInstance()->getDataManager();
+        Main::getInstance()->getDataManager()->getTags($xuid, function($tagsJson) use ($xuid) {
+            if(is_string($tagsJson)) {
+                $decodedData = json_decode($tagsJson, true);
+            } else{
+                $decodedData = $tagsJson;
+            }
 
-        $db->getTags($xuid, function (array $rows) use ($xuid, $db) {
-            $data = $rows[0] ?? [];
-            $tagsData = json_decode($data['tags'] ?? '[]', true);
+            $this->sessions[$xuid] = new Session($xuid, $decodedData['tags'] ?? []);
+            $this->sessions[$xuid]->setActiveTag($decodedData['activeTag'] ?? '');
 
-            $session = new Session($xuid, $tagsData);
-            $this->sessions[$xuid] = $session;
-
-            if (empty($data)) {
-                $db->addPlayer($xuid, $tagsData);
+            if (empty($decodedData['tags']) && empty($decodedData['activeTag'])) {
+                Main::getInstance()->getDataManager()->addPlayer($xuid, [
+                    'tags' => [],
+                    'activeTag' => ''
+                ]);
             }
         });
     }
@@ -32,12 +33,17 @@ final class SessionManager
     public function closeSession(string $xuid): void
     {
         if (isset($this->sessions[$xuid])) {
-            Main::getInstance()->getDataManager()->updateTags($xuid, $this->getSession($xuid)->getData());
+            $session = $this->sessions[$xuid];
+            Main::getInstance()->getDataManager()->addPlayer($xuid, [
+                'tags' => $session->getData()['tags'],
+                'activeTag' => $session->getActiveTag()
+            ]);
             unset($this->sessions[$xuid]);
         }
     }
 
-    public function getSession(string $xuid): ?Session{
+    public function getSession(string $xuid): ?Session
+    {
         return $this->sessions[$xuid] ?? null;
     }
 }
