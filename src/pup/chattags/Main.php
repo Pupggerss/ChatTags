@@ -27,8 +27,8 @@ class Main extends PluginBase
         $this->sessionManager = new SessionManager();
         new TagManager();
 
-        $this->getServer()->getCommandMap()->register("ChatTags", new tagsAdminCommand());
-        $this->getServer()->getCommandMap()->register("ChatTags", new tagsMenuCommand());
+        $this->getServer()->getCommandMap()->register("ChatTags", new tagsAdminCommand($this));
+        $this->getServer()->getCommandMap()->register("ChatTags", new tagsMenuCommand($this));
 
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new SessionListener(), $this);
