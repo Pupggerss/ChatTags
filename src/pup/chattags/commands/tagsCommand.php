@@ -4,6 +4,8 @@ namespace pup\chattags\commands;
 use dktapps\pmforms\{MenuForm, MenuOption};
 use pocketmine\command\{Command, CommandSender};
 use pocketmine\player\Player;
+use pocketmine\plugin\Plugin;
+use pocketmine\plugin\PluginOwnedTrait;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat as TF;
 use pup\chattags\{Main, TagManager};
@@ -12,9 +14,13 @@ use pup\chattags\utils\PlaceholderApi;
 
 class tagsCommand extends Command {
     use PlaceholderApi;
+    use PluginOwnedTrait;
+
+    //TODO:Change entire command implementation
 
     public function __construct() {
         parent::__construct("tags", "Manage ChatTags", "/tag <add|remove|menu|give> [args]", ["/chattags"]);
+        $this->owningPlugin = Main::getInstance();
         $this->setPermission("chattags.command");
     }
 
@@ -121,5 +127,11 @@ class tagsCommand extends Command {
     private function msg(CommandSender $sender, string $message): bool {
         $sender->sendMessage($message);
         return true;
+    }
+
+    public function getOwningPlugin()
+    : Plugin
+    {
+        return $this->getOwningPlugin();
     }
 }
