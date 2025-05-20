@@ -11,11 +11,14 @@ A lightweight PocketMine plugin that allows players to use customizable chat tag
 - SQLite database support
 
 ## Commands
-
+(Admin commands, require permission "chattags.command.admin")
 - `/tag add {name}` - Add a new tag (OP)
 - `/tag remove {name}` - Remove a tag (OP)
-- `/tag menu` - Open tag selection menu
 - `/tag give {player} {tag|all}` - Give tag(s) to player (OP)
+
+(Player command, require permission "chattags.command.use")
+- - `/mytags` - Open tag selection menu
+
 
 ## Tag Formatting
 
