@@ -12,26 +12,27 @@ use pup\chattags\{Main, TagManager};
 use pup\chattags\session\Session;
 use pup\chattags\utils\PlaceholderApi;
 
-class tagsCommand extends Command {
+class tagsAdminCommand extends Command {
     use PlaceholderApi;
     use PluginOwnedTrait;
 
     public function __construct() {
-        parent::__construct("tags", "Manage ChatTags", "/tag <add|remove|menu|give> [args]", ["/chattags"]);
+        parent::__construct("tags", "Manage ChatTags (Admin)", "/tags <add|remove|give> [args]", ["managetags"]);
         $this->owningPlugin = Main::getInstance();
-        $this->setPermission("chattags.command");
+        $this->setPermission("chattags.command.admin");
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         if (!$sender instanceof Player) return $this->msg($sender, TF::RED."Command in-game only!");
-        if (empty($args)) return $this->msg($sender, TF::RED."Usage: /tag <add|remove|menu|give> [args]");
+        if (!$this->testPermission($sender)) return false;
+        if (empty($args)) return $this->msg($sender, TF::RED."Usage: /tags <add|remove|give> [args]");
 
         $session = Main::getInstance()->getSessionManager()->getSession($sender->getXuid());
         if (!$session instanceof Session) return $this->msg($sender, TF::RED."Invalid session!");
 
         switch (strtolower($args[0])) {
             case "add":
-                if (count($args) < 2) return $this->msg($sender, TF::RED."Usage: /tag add <name>");
+                if (count($args) < 2) return $this->msg($sender, TF::RED."Usage: /tags add <name>");
                 $tag = implode(" ", array_slice($args, 1));
                 if (TagManager::addTag($tag)) {
                     $session->updateData($tag);
@@ -40,7 +41,7 @@ class tagsCommand extends Command {
                 return $this->msg($sender, TF::RED."Tag exists/invalid!");
 
             case "remove":
-                if (count($args) < 2) return $this->msg($sender, TF::RED."Usage: /tag remove <name>");
+                if (count($args) < 2) return $this->msg($sender, TF::RED."Usage: /tags remove <name>");
                 $search = implode(" ", array_slice($args, 1));
                 foreach (TagManager::getTags() as $tag) {
                     if (strtolower($this->revert($tag)) === strtolower($search)) {
@@ -52,13 +53,8 @@ class tagsCommand extends Command {
                 }
                 return $this->msg($sender, TF::RED."Tag not found!");
 
-            case "menu":
-                $form = $this->createForm($session);
-                $sender->sendForm($form);
-                return true;
-
             case "give":
-                if (count($args) < 3) return $this->msg($sender, TF::RED."Usage: /tag give <player> <tag|all>");
+                if (count($args) < 3) return $this->msg($sender, TF::RED."Usage: /tags give <player> <tag|all>");
                 $target = Server::getInstance()->getPlayerExact($args[1]);
                 if (!$target) return $this->msg($sender, TF::RED."Player not found!");
 
@@ -90,46 +86,8 @@ class tagsCommand extends Command {
         }
     }
 
-    private function createForm(Session $session): MenuForm {
-        $options = [];
-        foreach (TagManager::getTags() as $tag) {
-            $status = $tag === $session->getActiveTag()
-                ? TF::GOLD."Active"
-                : (in_array($tag, $session->getData(), true) ? TF::GREEN."Unlocked" : TF::RED."Locked");
-            $options[] = new MenuOption($this->getFormattedString($tag)."\n(".TF::RESET.$status.TF::RESET.")");
-        }
-
-        return new MenuForm("ChatTags", "Select a tag", $options,
-            function(Player $player, int $selected) use ($session): void {
-                $tags = TagManager::getTags();
-                if (!isset($tags[$selected])) return;
-
-                $tag = $tags[$selected];
-                if (!in_array($tag, $session->getData(), true)) {
-                    $this->msg($player, TF::RED."You don't have this tag!");
-                    return;
-                }
-
-                if ($tag === $session->getActiveTag()) {
-                    $session->setActiveTag("");
-                    $this->msg($player, TF::GREEN."Tag deselected!");
-                } else {
-                    $session->setActiveTag($tag);
-                    $this->msg($player, TF::GREEN."Selected: ".$this->getFormattedString($tag));
-                }
-                $player->sendForm($this->createForm($session));
-            }
-        );
-    }
-
     private function msg(CommandSender $sender, string $message): bool {
         $sender->sendMessage($message);
         return true;
-    }
-
-    public function getOwningPlugin()
-    : Plugin
-    {
-        return $this->getOwningPlugin();
     }
 }

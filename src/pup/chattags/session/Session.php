@@ -1,8 +1,5 @@
 <?php
-
-
 namespace pup\chattags\session;
-
 
 final class Session
 {
@@ -10,15 +7,15 @@ final class Session
 
     public function __construct(private string $xuid, private array $data){}
 
-    public function getXuid(): string{
+    public function getXuid(): string {
         return $this->xuid;
     }
 
-    /*
-     * returns the players avaliable tags
-     */
-    public function getData(): array{
-        return $this->data;
+    public function getData(): array {
+        return [
+            'tags' => $this->data,
+            'activeTag' => $this->activeTag
+        ];
     }
 
     public function updateData(string $tag): void {
@@ -27,11 +24,11 @@ final class Session
         }
     }
 
-    public function getActiveTag(): string{
+    public function getActiveTag(): string {
         return $this->activeTag;
     }
 
-    public function setActiveTag(string $tag): void{
+    public function setActiveTag(string $tag): void {
         $this->activeTag = $tag;
     }
 }
