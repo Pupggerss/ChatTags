@@ -16,10 +16,6 @@ class tagsCommand extends Command {
     use PlaceholderApi;
     use PluginOwnedTrait;
 
-    //TODO:Change entire command implementation
-
-   //TODO: MANAGE PERMISSIONS
-
     public function __construct() {
         parent::__construct("tags", "Manage ChatTags", "/tag <add|remove|menu|give> [args]", ["/chattags"]);
         $this->owningPlugin = Main::getInstance();
