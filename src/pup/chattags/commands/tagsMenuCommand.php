@@ -7,6 +7,7 @@ use dktapps\pmforms\MenuOption;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
+use pocketmine\plugin\PluginOwned;
 use pocketmine\plugin\PluginOwnedTrait;
 use pocketmine\utils\TextFormat as TF;
 use pup\chattags\Main;
@@ -14,14 +15,14 @@ use pup\chattags\session\Session;
 use pup\chattags\TagManager;
 use pup\chattags\utils\PlaceholderApi;
 
-class tagsMenuCommand extends Command
+class tagsMenuCommand extends Command implements PluginOwned
 {
     use PlaceholderApi;
     use PluginOwnedTrait;
 
-    public function __construct(){
+    public function __construct(Main $plugin){
         parent::__construct("chattags", "View ChatTags", "/chattags", ["mytags"]);
-        $this->owningPlugin = Main::getInstance();
+        $this->owningPlugin = $plugin;
         $this->setPermission("chattags.command.use");
     }
 
