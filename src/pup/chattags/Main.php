@@ -4,7 +4,8 @@
 namespace pup\chattags;
 
 use pocketmine\plugin\PluginBase;
-use pup\chattags\commands\tagsCommand;
+use pup\chattags\commands\tagsAdminCommand;
+use pup\chattags\commands\tagsMenuCommand;
 use pup\chattags\database\DataManager;
 use pup\chattags\session\SessionListener;
 use pup\chattags\session\SessionManager;
@@ -26,7 +27,8 @@ class Main extends PluginBase
         $this->sessionManager = new SessionManager();
         new TagManager();
 
-        $this->getServer()->getCommandMap()->register("ChatTags", new tagsCommand());
+        $this->getServer()->getCommandMap()->register("ChatTags", new tagsAdminCommand());
+        $this->getServer()->getCommandMap()->register("ChatTags", new tagsMenuCommand());
 
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new SessionListener(), $this);

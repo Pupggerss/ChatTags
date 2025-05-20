@@ -1,8 +1,5 @@
 <?php
-
-
 namespace pup\chattags\database;
-
 
 use Closure;
 use poggit\libasynql\DataConnector;
@@ -33,26 +30,18 @@ class DataManager
             fn(SqlError $err) => Main::getInstance()->getServer()->getLogger()->error($err->getMessage()));
     }
 
-
     public function getTags(string $xuid, Closure $callback): void
     {
-        $this->database->executeSelect(
-            'get.tags', [
-            'xuid' => $xuid
-        ], function (array $rows) use ($callback) {
-            $data = $rows[0] ?? [];
-            $callback($data);
-        }
-        );
+        $this->database->executeSelect('get.tags', ['xuid' => $xuid], function(array $rows) use ($callback) {
+            $callback($rows[0]["tags"] ?? []);
+        });
     }
 
     public function updateTags(string $xuid, array $data): void
     {
-        $data = json_encode($data);
         $this->database->executeChange('update.tags', [
             'xuid' => $xuid,
-            'tags' => $data
-        ], null,
-            fn(SqlError $err) => Main::getInstance()->getServer()->getLogger()->error($err->getMessage()));
+            'tags' => json_encode($data)
+        ], null, fn(SqlError $err) => Main::getInstance()->getLogger()->error($err->getMessage()));
     }
 }

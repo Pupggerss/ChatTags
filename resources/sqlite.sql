@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS players
 (
     xuid     TEXT PRIMARY KEY,
-    tags     TEXT DEFAULT NULL
+    tags     TEXT
 );
 -- # }
 -- # }
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS players
 -- # { player
 -- # :xuid string
 -- # :tags string
-INSERT OR IGNORE INTO players(xuid, tags)
+INSERT OR REPLACE INTO players(xuid, tags)
 VALUES (:xuid,
         :tags);
 -- # }
