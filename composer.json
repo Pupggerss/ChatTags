@@ -1,9 +1,10 @@
 {
-  "name": "dre/skyblockcore",
+  "name": "pup/chattags",
   "require": {
     "sof3/libasynql": "^4.2.2",
     "pocketmine/pocketmine-mp": "^5.0.0",
-    "dktapps/pmforms": "*"
+    "dktapps/pmforms": "*",
+    "paroxity/commando": "3.2.1"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

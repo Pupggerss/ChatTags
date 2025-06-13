@@ -2,13 +2,22 @@ name: ChatTags
 main: pup\chattags\Main
 description: Custom Chat Prefixes
 api: 5.0.0
-version: 1.2.1
+version: 1.3.0
 author: pup
 
 permissions:
-  chattags.command.admin:
+  chattags.admin.add:
     default: op
-    description: Add, Remove or display player ChatTags"
+    description: Add a new ChatTag
+  chattags.admin.remove:
+    default: op
+    description: Remove an existing ChatTag
+  chattags.admin.give:
+    default: op
+    description: Give a player a specific or all tags
   chattags.command.use:
     default: true
-    description: View tags menu
+    description: Allow players to use the /tags command
+  chattags.command.menu:
+    default: true
+    description: Allow players to open the Chattags tag menu
