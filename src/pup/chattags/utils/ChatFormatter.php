@@ -6,7 +6,6 @@ namespace pup\chattags\utils;
 
 use pocketmine\lang\Translatable;
 use pocketmine\player\Player;
-use pocketmine\utils\TextFormat;
 use pup\chattags\Main;
 use pup\chattags\session\Session;
 
@@ -14,9 +13,8 @@ class ChatFormatter implements \pocketmine\player\chat\ChatFormatter
 {
     use PlaceholderApi;
 
-//To be edited, not force a specific format.
-
-    public function format(string $username, string $message): Translatable|string
+    public function format(string $username, string $message)
+    : Translatable|string
     {
         $player = Main::getInstance()->getServer()->getPlayerExact($username);
         if (!$player instanceof Player) {

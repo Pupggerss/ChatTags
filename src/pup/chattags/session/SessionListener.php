@@ -11,11 +11,15 @@ use pup\chattags\Main;
 
 class SessionListener implements Listener
 {
-    public function onJoin(PlayerLoginEvent $event): void{
+    public function onJoin(PlayerLoginEvent $event)
+    : void
+    {
         Main::getInstance()->getSessionManager()->createSession($event->getPlayer());
     }
 
-    public function onLeave(PlayerQuitEvent $event): void{
+    public function onLeave(PlayerQuitEvent $event)
+    : void
+    {
         Main::getInstance()->getSessionManager()->closeSession($event->getPlayer()->getXuid());
     }
 }

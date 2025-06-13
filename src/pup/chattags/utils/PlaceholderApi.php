@@ -9,29 +9,30 @@ trait PlaceholderApi
 {
     /** @var array<string, string> */
     private static array $colorMap = [
-        'black' => TF::BLACK,
-        'dark_blue' => TF::DARK_BLUE,
-        'dark_green' => TF::DARK_GREEN,
-        'dark_aqua' => TF::DARK_AQUA,
-        'dark_red' => TF::DARK_RED,
-        'dark_purple' => TF::DARK_PURPLE,
-        'gold' => TF::GOLD,
-        'gray' => TF::GRAY,
-        'dark_gray' => TF::DARK_GRAY,
-        'blue' => TF::BLUE,
-        'green' => TF::GREEN,
-        'aqua' => TF::AQUA,
-        'red' => TF::RED,
+        'black'        => TF::BLACK,
+        'dark_blue'    => TF::DARK_BLUE,
+        'dark_green'   => TF::DARK_GREEN,
+        'dark_aqua'    => TF::DARK_AQUA,
+        'dark_red'     => TF::DARK_RED,
+        'dark_purple'  => TF::DARK_PURPLE,
+        'gold'         => TF::GOLD,
+        'gray'         => TF::GRAY,
+        'dark_gray'    => TF::DARK_GRAY,
+        'blue'         => TF::BLUE,
+        'green'        => TF::GREEN,
+        'aqua'         => TF::AQUA,
+        'red'          => TF::RED,
         'light_purple' => TF::LIGHT_PURPLE,
-        'yellow' => TF::YELLOW,
-        'white' => TF::WHITE,
-        'bold' => TF::BOLD,
-        'italic' => TF::ITALIC,
-        'obfuscated' => TF::OBFUSCATED,
-        'reset' => TF::RESET
+        'yellow'       => TF::YELLOW,
+        'white'        => TF::WHITE,
+        'bold'         => TF::BOLD,
+        'italic'       => TF::ITALIC,
+        'obfuscated'   => TF::OBFUSCATED,
+        'reset'        => TF::RESET
     ];
 
-    public function getFormattedString(string $message): string
+    public function getFormattedString(string $message)
+    : string
     {
         return preg_replace_callback(
             '/{([a-zA-Z_]+)}/',
@@ -40,7 +41,14 @@ trait PlaceholderApi
         );
     }
 
-    public function revert(string $formattedMessage): string
+    private function mapColor(string $color)
+    : string
+    {
+        return self::$colorMap[strtolower($color)] ?? TF::WHITE;
+    }
+
+    public function revert(string $formattedMessage)
+    : string
     {
         $result = '';
         $parts = preg_split('/(?=' . TF::ESCAPE . ')/', $formattedMessage);
@@ -59,10 +67,5 @@ trait PlaceholderApi
         }
 
         return $result;
-    }
-
-    private function mapColor(string $color): string
-    {
-        return self::$colorMap[strtolower($color)] ?? TF::WHITE;
     }
 }
