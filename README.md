@@ -17,9 +17,6 @@ A lightweight PocketMine plugin that allows players to use customizable chat tag
 - `/tags menu` - Open tag selection menu
 - `/tags give {player} [tag]` - Give tag(s) to player (OP)
 
-(Player command, require permission "chattags.command.use")
-- - `/mytags` - Open tag selection menu
-
 
 ## Tag Formatting
 
