@@ -5,7 +5,7 @@ A lightweight PocketMine plugin that allows players to use customizable chat tag
 ## Features
 
 - Customizable tags with color formatting
-- In-game commands and JSON file editing
+- In-game commands
 - Full support for all TextFormat colors using `{colorcode}` syntax
 - Menu interface for tag selection
 - SQLite database support
